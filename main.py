@@ -9,7 +9,7 @@ TOKEN = "8468549874:AAFUKgQltSmjC13ghrrpUuwHFqPEMYMof8c"
 
 # IMPORTANTE: Mude 'SEU_USER_AQUI' para o seu @ do Telegram (sem o @)
 # Exemplo: DONO_USERNAME = "MaySeries"
-DONO_USERNAME = "@catalogoseriesfilmes" 
+DONO_USERNAME = "catalogoseriesfilmes" 
 
 app = Flask(__name__)
 
