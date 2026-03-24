@@ -1,25 +1,39 @@
-from telegram import Update
-from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes
+from flask import Flask, request
+import telegram
 
-TOKEN = "8468549874:AAFUKgQltSmjC13ghrrpUuwHFqPEMYMof8c"
+TOKEN = "COLE_SEU_TOKEN_AQUI"
 
-async def responder(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("Um Admin, logo te responderá 👍")
+bot = telegram.Bot(token=TOKEN)
+app = Flask(_name_)
 
-async def boas_vindas(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    for membro in update.message.new_chat_members:
-        nome = membro.first_name
-        await update.message.reply_text(
-            f"Olá, seja bem-vindo(a) ao Grupo ✨Catálogo Séries & Animes✨!\n"
-            f"Estamos aqui para te ajudar a encontrar sua série.\n"
-            f"Faça seu pedido e aguarde um Admin.\n\n"
-            f"{nome} 🎉"
+@app.route("/")
+def home():
+    return "Bot rodando!"
+
+@app.route(f"/{TOKEN}", methods=["POST"])
+def webhook():
+    update = telegram.Update.de_json(request.get_json(force=True), bot)
+
+    # Verificar se há uma nova pessoa entrando no grupo
+    if update.message and update.message.new_chat_members:
+        for new_member in update.message.new_chat_members:
+            chat_id = update.message.chat.id
+            # Mensagem de boas-vindas quando alguém entra no grupo
+            bot.send_message(
+                chat_id=chat_id,
+                text="👋 Olá! Seja Bem-vindo(a) ao Grupo ✨Catálogo De Séries e Animes✨!\nEstamos aqui para poder te ajudar a encontrar sua série. Faça seu pedido e espere um Admin te atender.🇧🇷"
+            )
+
+    # Resposta normal para as mensagens
+    if update.message and update.message.text:
+        chat_id = update.message.chat.id
+        text = update.message.text
+        bot.send_message(
+            chat_id=chat_id,
+            text=f"Você disse: {text}"
         )
 
-app = ApplicationBuilder().token(TOKEN).build()
+    return "ok"
 
-app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, responder))
-app.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, boas_vindas))
-
-print("Bot rodando...")
-app.run_polling()
+if _name_ == "_main_":
+    app.run(host="0.0.0.0", port=10000)
