@@ -7,7 +7,7 @@ from telegram.ext import ApplicationBuilder, ContextTypes, ChatMemberHandler, Me
 # --- CONFIGURAÇÕES ---
 TOKEN = "8468549874:AAFUKgQltSmjC13ghrrpUuwHFqPEMYMof8c"
 # IMPORTANTE: Coloque seu nome de usuário do Telegram abaixo (sem o @)
-DONO_USERNAME = "SEU_USER_AQUI" 
+DONO_USERNAME = "catalogoseriesfilmes" 
 
 app = Flask(__name__)
 
