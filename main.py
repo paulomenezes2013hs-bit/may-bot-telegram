@@ -1,29 +1,26 @@
-from flask import Flask
-import threading
+from flask import Flask, request
+import telegram
 
-from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+TOKEN = 8468549874:AAFUKgQltSmjC13ghrrpUuwHFqPEMYMof8c"
+bot = telegram.Bot(token=TOKEN)
 
-TOKEN = "8468549874:AAFUKgQltSmjC13ghrrpUuwHFqPEMYMof8c"
+app = Flask(_name_)
 
-app_web = Flask(__name__)
+@app.route(f"/{TOKEN}", methods=["POST"])
+def webhook():
+    update = telegram.Update.de_json(request.get_json(force=True), bot)
 
-@app_web.route("/")
+    if update.message:
+        text = update.message.text
+        chat_id = update.message.chat.id
+
+        bot.send_message(chat_id=chat_id, text=f"Você disse: {text}")
+
+    return "ok"
+
+@app.route("/")
 def home():
     return "Bot rodando!"
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("Bot funcionando!")
-
-def run_bot():
-    app = ApplicationBuilder().token(TOKEN).build()
-    app.add_handler(CommandHandler("start", start))
-    app.run_polling()
-
-if __name__ == "__main__":
-    t = threading.Thread(target=run_bot)
-    t.start()
-
-    import os
-    port = int(os.environ.get("PORT", 10000))
-    app_web.run(host="0.0.0.0", port=port)
+if _name_ == "_main_":
+    app.run(host="0.0.0.0", port=10000)
