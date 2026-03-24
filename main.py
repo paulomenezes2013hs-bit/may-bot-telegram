@@ -4,7 +4,7 @@ from telegram.ext import ApplicationBuilder, ContextTypes, ChatMemberHandler
 
 TOKEN = "8468549874:AAFUKgQltSmjC13ghrrpUuwHFqPEMYMof8c"
 
-app = Flask(_name_)
+app = Flask(__name__)
 
 # Criar aplicação do bot
 application = ApplicationBuilder().token(TOKEN).build()
