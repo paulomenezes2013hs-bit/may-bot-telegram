@@ -7,7 +7,7 @@ from telegram.ext import ApplicationBuilder, ContextTypes, ChatMemberHandler, Me
 # Configurações
 TOKEN = "8468549874:AAFUKgQltSmjC13ghrrpUuwHFqPEMYMof8c"
 # Substitua pelo seu @ de usuário (sem o @) para o botão de contato
-DONO_USERNAME = "SEU_USER_AQUI" 
+DONO_USERNAME = "catalogoseriesfilmes" 
 
 app = Flask(__name__)
 
